@@ -10,7 +10,7 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 ```{r}
 library(ggplot2)
 library(dplyr)
-survey <- read.csv('HW1/2010 Survey - Student Data - 437 responses.csv')
+#survey <- read.csv('HW1/2010 Survey - Student Data - 437 responses.csv')
 seqnums <- c(51,52,54,55,57,58,59)
 seqs <- survey[,seqnums]
 
@@ -43,10 +43,60 @@ ggplot(se, aes(x=resp, fill=resp)) +
 ```
 
 ```{r}
+df <- as.data.frame(list(explanatory=survey[,61], response=survey[,55]))
+tbl <- table(df, useNA = 'ifany')
 
-df = as.data.frame(time.codes[survey[,61]])
-names(df) <- c('Time.per.day.on.FB.in.past.week')
-ggplot(df, aes(x=Time.per.day.on.FB.in.past.week)) + geom_bar() + theme(axis.text.x = element_text(angle = 315, hjust = 0), plot.margin = margin(10, 40, 10, 10))
+```
+```{r}
+time.codes = c(
+  '0-15 minutes',
+  '15-30 minutes',
+  '30-45 minutes',
+  '45-60 minutes (1 hour)',
+  '60 minutes (1 hour) - 75 minutes',
+  '75-90 minutes',
+  '90-105 minutes',
+  '105-120 minutes (2 hours)',
+  '120 minutes (2 hours) - 135 minutes',
+  '135-150 minutes',
+  '150-165 minutes',
+  '165-180 minutes (3 hours)',
+  'More than 3 hours')
+
+df$time <- time.codes[df$explanatory]
+df$time <- factor(df$time,levels=time.codes)
+df$able <- likely[df$response]
+
+ggplot(df, aes(x=time)) + geom_bar() + theme(axis.text.x = element_text(angle = 315, hjust = 0), plot.margin = margin(10, 40, 10, 10))
+```
+```{r}
+
+ggplot(df, aes(x=time, fill=forcats::fct_rev(factor(able, levels=c(NA, likely))))) + 
+  geom_bar() + 
+  theme(axis.text.x = element_text(angle = 315, hjust = 0), 
+        plot.margin = margin(10, 40, 10, 10))
+```
+
+```{r eval=FALSE, include=FALSE}
+df %>%
+     group_by(time, able) %>%
+     summarise(n = n()) %>%
+     mutate(x.width = sum(n)) %>%
+  
+    ggplot(aes(x=factor(time), y=n)) +
+    geom_bar(aes(width=x.width, fill=factor(able)),
+             colour = "white", size=1, position=position_fill(reverse = T)) +
+    geom_text(aes(label=n),
+               position=position_fill(vjust = 0.5)) +
+    facet_grid(~ time, space = 'free', scales='free', switch='x') +
+    scale_x_discrete(name="a") +
+    scale_y_continuous(labels=scales::percent) +
+    theme(axis.text.x = element_text(angle = 315, hjust = 0),
+          axis.ticks.x = element_blank(),
+          axis.title.y = element_blank(),
+          strip.background = element_blank(),
+          panel.spacing = unit(0,'pt'))
+
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
