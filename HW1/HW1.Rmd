@@ -39,13 +39,11 @@ ggplot(se, aes(x=resp, fill=resp)) +
         legend.position = 'bottom') + 
   facet_wrap(~question, 
              labeller = as_labeller(function(s) str_wrap(s, width = 28)))
-  
 ```
 
 ```{r}
-df <- as.data.frame(list(explanatory=survey[,61], response=survey[,55]))
-tbl <- table(df, useNA = 'ifany')
-
+df <- as.data.frame(list(explanatory=survey[,61], response=survey[,59]))
+tbl <- table(df)
 ```
 ```{r}
 time.codes = c(
@@ -65,38 +63,48 @@ time.codes = c(
 
 df$time <- time.codes[df$explanatory]
 df$time <- factor(df$time,levels=time.codes)
-df$able <- likely[df$response]
+df$satisfied <- likely[df$response]
+df$satisfied <- factor(df$satisfied,levels=likely)
 
-ggplot(df, aes(x=time)) + geom_bar() + theme(axis.text.x = element_text(angle = 315, hjust = 0), plot.margin = margin(10, 40, 10, 10))
+ggplot(df, aes(x=time)) + geom_bar() + theme(axis.text.x = element_text(angle = 315, hjust = 0), plot.margin = margin(10, 40, 10, 10)) + geom_text(stat='count', aes(label=..count..), 
+            position=position_dodge(width=0.9), 
+            vjust=-0.25 )
 ```
 ```{r}
-
-ggplot(df, aes(x=time, fill=forcats::fct_rev(factor(able, levels=c(NA, likely))))) + 
+ggplot(df, aes(x=satisfied, fill=satisfied)) + 
+  geom_bar() + 
+  geom_text(stat='count', aes(label=..count..), 
+            position=position_dodge(width=0.9), 
+            vjust=-0.25 ) +
+  theme(axis.text.x = element_text(angle = 315, hjust = 0), plot.margin = margin(10, 40, 10, 10))
+```
+```{r}
+ggplot(df, aes(x=time, fill=forcats::fct_rev(factor(satisfied, levels=c(NA, likely))))) + 
   geom_bar() + 
   theme(axis.text.x = element_text(angle = 315, hjust = 0), 
         plot.margin = margin(10, 40, 10, 10))
 ```
 
-```{r eval=FALSE, include=FALSE}
+```{r}
 df %>%
-     group_by(time, able) %>%
-     summarise(n = n()) %>%
-     mutate(x.width = sum(n)) %>%
+    group_by(satisfied, time) %>%
+    summarise(n = n()) %>%
+    mutate(x.width = sum(n)) %>%
   
-    ggplot(aes(x=factor(time), y=n)) +
-    geom_bar(aes(width=x.width, fill=factor(able)),
-             colour = "white", size=1, position=position_fill(reverse = T)) +
+    ggplot(aes(x=satisfied, y=n)) +
+    geom_col(aes(width=x.width, fill=time),
+             colour = "white", size=2, position=position_fill(reverse = T)) +
     geom_text(aes(label=n),
                position=position_fill(vjust = 0.5)) +
-    facet_grid(~ time, space = 'free', scales='free', switch='x') +
-    scale_x_discrete(name="a") +
+    facet_grid(~ satisfied, space = 'free', scales='free', switch='x') +
+    #scale_x_discrete(name="a") +
     scale_y_continuous(labels=scales::percent) +
-    theme(axis.text.x = element_text(angle = 315, hjust = 0),
+    theme(axis.text.x = element_blank(),
           axis.ticks.x = element_blank(),
           axis.title.y = element_blank(),
+          strip.text = element_text(angle = 270, hjust = 0),
           strip.background = element_blank(),
           panel.spacing = unit(0,'pt'))
-
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
