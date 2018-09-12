@@ -10,6 +10,9 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 ```{r}
 library(ggplot2)
 library(dplyr)
+library(magrittr)
+library(tidyr)
+library(stringr)
 #survey <- read.csv('HW1/2010 Survey - Student Data - 437 responses.csv')
 seqnums <- c(51,52,54,55,57,58,59)
 seqs <- survey[,seqnums]
