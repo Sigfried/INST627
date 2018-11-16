@@ -1,0 +1,803 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{HW3}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}210}]:} \PY{k+kn}{library}\PY{p}{(}ggplot2\PY{p}{)}
+          \PY{k+kn}{library}\PY{p}{(}dplyr\PY{p}{)}
+          \PY{k+kn}{library}\PY{p}{(}magrittr\PY{p}{)}
+          \PY{k+kn}{library}\PY{p}{(}tidyr\PY{p}{)}
+          \PY{k+kn}{library}\PY{p}{(}stringr\PY{p}{)}
+          \PY{k+kn}{library}\PY{p}{(}repr\PY{p}{)}
+          survey \PY{o}{\PYZlt{}\PYZhy{}} read.csv\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{./2010 Survey \PYZhy{} Student Data \PYZhy{} 437 responses.csv\PYZsq{}}\PY{p}{)}
+          \PY{k+kp}{names}\PY{p}{(}survey\PY{p}{)}\PY{p}{[}\PY{l+m}{63}\PY{p}{]} \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+s}{\PYZsq{}}\PY{l+s}{totfriends\PYZsq{}}
+\end{Verbatim}
+
+
+    Robin Dunbar a famous anthropologist argued that humans only have the
+capacity to keep track of so many people at a time. He argued that the
+maximum number of people humans could keep track of is 150. This number
+is called Dunbar's number (Links to an external site.). Some have
+interpreted this to mean that any individual person has on average about
+150 friends.
+
+Some technologists have argued that social media and modern information
+technology allow individuals to keep track of more people. For example,
+Facebook algorithmically organizes and presents information about our
+Facebook friends in a centralized feed lowering the costs associated
+with keeping in contact with all these people.
+
+Fortunately we can evaluate this claim because our colleague Prof. Vitak
+has collected data on Facebook usage among college students at a large
+university. Using this sample dataPreview the documentView in a new
+window and the codebookPreview the documentView in a new window which
+explains the variables evaluate the technologists's claim.
+
+Question 1: Using the theoretical population mean and the sample
+provided conduct a one-sample t-test (with significance level alpha =
+0.05) to determine whether individuals have more friends than would be
+expected by Dunbar's number. (R Hints: 1) convert .xls to .csv by saving
+as .csv in Excel this will make it easier to read in to R; 2) relabel
+the columns that you are going to use to one word labels with no spaces
+in Excel, this will make it easier to refer to them in R e.g. change
+"How old are you?" to "age" you don't need to do this with all columns,
+just the ones you plan to use.)
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Graph the total Facebook friend values for the sample. What is the
+  shape?
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}244}]:} \PY{k+kp}{options}\PY{p}{(}repr.plot.width\PY{o}{=}\PY{l+m}{4}\PY{p}{,} repr.plot.height\PY{o}{=}\PY{l+m}{4}\PY{p}{)}
+          hist\PY{p}{(}survey\PY{o}{\PYZdl{}}totfriends\PY{p}{,} xlab\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Total Friends\PYZdq{}}\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          qqnorm\PY{p}{(}survey\PY{o}{\PYZdl{}}totfriends\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}\PY{p}{)}\PY{p}{;} qqline\PY{p}{(}survey\PY{o}{\PYZdl{}}totfriends\PY{p}{,} col \PY{o}{=} \PY{l+m}{2}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_2_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_2_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  State your null and alternative hypotheses.
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}149}]:} N \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{nrow}\PY{p}{(}survey\PY{p}{)}
+          xbar \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{mean}\PY{p}{(}survey\PY{o}{\PYZdl{}}totfriends\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}
+          
+          mu \PY{o}{\PYZlt{}\PYZhy{}} 𝝁 \PY{o}{\PYZlt{}\PYZhy{}} dunbar \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{150}
+          IRdisplay\PY{o}{::}display\PYZus{}markdown\PY{p}{(}glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}
+          \PY{l+s}{Hypothesis: Students have more Facebook friends than predicted by Dunbar\PYZbs{}\PYZsq{}s number}
+          
+          \PY{l+s}{\PYZdl{}\PYZdl{}H\PYZus{}0 : \PYZbs{}\PYZbs{}bar\PYZob{}\PYZob{}x\PYZcb{}\PYZcb{} = \PYZbs{}\PYZbs{}mu\PYZdl{}\PYZdl{}}
+          \PY{l+s}{\PYZdl{}H\PYZus{}A : \PYZbs{}\PYZbs{}bar\PYZob{}\PYZob{}x\PYZcb{}\PYZcb{} \PYZbs{}\PYZbs{}ne \PYZbs{}\PYZbs{}mu \PYZbs{}\PYZbs{}quad\PYZdl{} two\PYZhy{}tailed for more conservative evaluation}
+          
+          \PY{l+s}{\PYZdl{}\PYZbs{}\PYZbs{}mu: \PYZob{}fmt(𝝁)\PYZcb{} \PYZbs{}\PYZbs{}quad\PYZdl{} Dunbar\PYZbs{}\PYZsq{}s number}
+          \PY{l+s}{\PYZdl{}\PYZdl{}\PYZbs{}\PYZbs{}bar\PYZob{}\PYZob{}x\PYZcb{}\PYZcb{}: \PYZob{}fmt(xbar)\PYZcb{}\PYZdl{}\PYZdl{}}
+          \PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    Hypothesis: Students have more Facebook friends than predicted by
+Dunbar's number
+
+\[H_0 : \bar{x} = \mu\] \(H_A : \bar{x} \ne \mu \quad\) two-tailed for
+more conservative evaluation
+
+\(\mu: 150 \quad\) Dunbar's number \[\bar{x}: 433\]
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}152}]:} IRdisplay\PY{o}{::}display\PYZus{}markdown\PY{p}{(}glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}
+          \PY{l+s}{df: \PYZob{}fmt(df)\PYZcb{}\PYZbs{}n}
+          \PY{l+s}{t\PYZhy{}score: \PYZdl{}\PYZbs{}\PYZbs{}dfrac\PYZob{}\PYZob{}\PYZbs{}\PYZbs{}bar\PYZob{}\PYZob{}x\PYZcb{}\PYZcb{} \PYZhy{} \PYZbs{}\PYZbs{}mu\PYZcb{}\PYZcb{}\PYZob{}\PYZob{}s\PYZbs{}\PYZbs{}over\PYZob{}\PYZob{}\PYZbs{}\PYZbs{}sqrt\PYZob{}\PYZob{}n\PYZcb{}\PYZcb{}\PYZcb{}\PYZcb{}\PYZcb{}\PYZcb{}\PYZdl{} =}
+          \PY{l+s}{\PYZdl{}\PYZbs{}\PYZbs{}dfrac\PYZob{}\PYZob{} \PYZob{}fmt(xbar)\PYZcb{} \PYZhy{} \PYZob{}mu\PYZcb{}\PYZcb{}\PYZob{}\PYZob{}\PYZob{}fmt(s,2)\PYZcb{}\PYZbs{}\PYZbs{}over\PYZob{}\PYZob{}\PYZbs{}\PYZbs{}sqrt\PYZob{}\PYZob{}\PYZob{}n\PYZcb{}\PYZcb{}\PYZcb{}\PYZcb{}\PYZcb{}\PYZcb{}\PYZcb{}\PYZdl{} = \PYZob{}fmt(tscore,2)\PYZcb{}}
+          \PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    df: 436
+
+t-score: \(\dfrac{\bar{x} - \mu}{s\over{\sqrt{n}}}\) =
+\(\dfrac{ 433 - 150}{275.34\over{\sqrt{474}}}\) = 21.49
+
+    
+    \begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Calculate your t-statistic
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}201}]:} s \PY{o}{\PYZlt{}\PYZhy{}} sd\PY{p}{(}survey\PY{o}{\PYZdl{}}totfriends\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}
+          se \PY{o}{\PYZlt{}\PYZhy{}} s\PY{o}{/}\PY{k+kp}{sqrt}\PY{p}{(}N\PY{p}{)}
+          
+          tscore \PY{o}{\PYZlt{}\PYZhy{}} \PY{p}{(}xbar \PY{o}{\PYZhy{}} mu\PY{p}{)} \PY{o}{/} \PY{p}{(}s\PY{o}{/}\PY{k+kp}{sqrt}\PY{p}{(}N\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}  \PYZsh{} week 6 slides, p. 23}
+          
+          IRdisplay\PY{o}{::}display\PYZus{}markdown\PY{p}{(}glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}
+          \PY{l+s}{t\PYZhy{}score: \PYZdl{}T\PYZus{}\PYZob{}\PYZob{}df\PYZcb{}\PYZcb{} = \PYZbs{}\PYZbs{}dfrac\PYZob{}\PYZob{}point\PYZbs{}\PYZbs{};estimate \PYZhy{} null\PYZbs{}\PYZbs{};value\PYZcb{}\PYZcb{}\PYZob{}\PYZob{}SE\PYZcb{}\PYZcb{} \PYZbs{}\PYZbs{}quad\PYZdl{} week 6 slides, pp. 23, 51}
+          
+          \PY{l+s}{SE: \PYZdl{}\PYZbs{}\PYZbs{}dfrac\PYZob{}\PYZob{}s\PYZcb{}\PYZcb{}\PYZob{}\PYZob{}\PYZbs{}\PYZbs{}sqrt\PYZob{}\PYZob{}n\PYZcb{}\PYZcb{}\PYZcb{}\PYZdl{} = \PYZdl{}\PYZbs{}\PYZbs{}dfrac\PYZob{}\PYZob{}\PYZob{}fmt(s)\PYZcb{}\PYZcb{}\PYZob{}\PYZob{}\PYZbs{}\PYZbs{}sqrt\PYZob{}\PYZob{}\PYZob{}fmt(n,2)\PYZcb{}\PYZcb{}\PYZcb{}\PYZcb{}\PYZcb{}\PYZdl{} = \PYZob{}fmt(se,2)\PYZcb{}}
+          
+          \PY{l+s}{\PYZdl{}T = \PYZbs{}\PYZbs{}dfrac\PYZob{}\PYZob{}\PYZbs{}\PYZbs{}bar\PYZob{}\PYZob{}x\PYZcb{}\PYZcb{} \PYZhy{} \PYZbs{}\PYZbs{}mu\PYZcb{}\PYZcb{}\PYZob{}\PYZob{}\PYZob{}\PYZob{}SE\PYZcb{}\PYZcb{}\PYZcb{}\PYZdl{} }
+          \PY{l+s}{\PYZdl{}\PYZbs{}\PYZbs{}dfrac\PYZob{}\PYZob{} \PYZob{}fmt(xbar)\PYZcb{} \PYZhy{} \PYZob{}mu\PYZcb{}\PYZcb{}\PYZcb{}\PYZob{}\PYZob{}\PYZob{}fmt(se,2)\PYZcb{}\PYZcb{}\PYZcb{} = \PYZob{}fmt(tscore,2)\PYZcb{}\PYZdl{}}
+          
+          \PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    t-score: \(T_{df} = \dfrac{point\;estimate - null\;value}{SE} \quad\)
+week 6 slides, pp.~23, 51
+
+SE: \(\dfrac{s}{\sqrt{n}}\) = \(\dfrac{275}{\sqrt{474}}\) = 13.17
+
+\(T = \dfrac{\bar{x} - \mu}{{SE}}\)
+\(\dfrac{ 433 - 150}{13.17} = 21.49\)
+
+    
+    \begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Look up the probability for the t-statistic
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}162}]:} df \PY{o}{\PYZlt{}\PYZhy{}} N \PY{o}{\PYZhy{}} \PY{l+m}{1}
+          p\PYZus{}tscore \PY{o}{\PYZlt{}\PYZhy{}} pt\PY{p}{(}tscore\PY{p}{,} df\PY{p}{,} lower.tail \PY{o}{=} \PY{n+nb+bp}{F}\PY{p}{)}
+          
+          IRdisplay\PY{o}{::}display\PYZus{}markdown\PY{p}{(}glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}
+          \PY{l+s}{probability of t\PYZhy{}statistic: *pt(tscore, df, lower.tail = F)* = \PYZob{}p\PYZus{}tscore\PYZcb{}}
+          \PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    probability of t-statistic: \emph{pt(tscore, df, lower.tail = F)} =
+1.13892675278444e-70
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}209}]:} t.test\PY{p}{(}survey\PY{o}{\PYZdl{}}totfriends\PY{p}{,} mu\PY{o}{=}mu\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+	One Sample t-test
+
+data:  survey$totfriends
+t = 20.271, df = 388, p-value < 2.2e-16
+alternative hypothesis: true mean is not equal to 150
+95 percent confidence interval:
+ 405.5476 460.4421
+sample estimates:
+mean of x 
+ 432.9949 
+
+    \end{verbatim}
+
+    
+    \begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  What is the effect size?
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}208}]:} effect\PYZus{}size \PY{o}{\PYZlt{}\PYZhy{}} cohend \PY{o}{\PYZlt{}\PYZhy{}} \PY{p}{(}xbar \PY{o}{\PYZhy{}} mu\PY{p}{)} \PY{o}{/} s
+          critical\PYZus{}t \PY{o}{\PYZlt{}\PYZhy{}} tstar \PY{o}{\PYZlt{}\PYZhy{}} qt\PY{p}{(}\PY{l+m}{1} \PY{o}{\PYZhy{}} alpha\PY{o}{/}\PY{l+m}{2}\PY{p}{,} df\PY{p}{)}
+          IRdisplay\PY{o}{::}display\PYZus{}markdown\PY{p}{(}glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}
+          \PY{l+s}{Cohen\PYZbs{}\PYZsq{}s d = \PYZdl{}\PYZbs{}\PYZbs{}dfrac\PYZob{}\PYZob{}point\PYZbs{}\PYZbs{};estimate \PYZhy{} null\PYZbs{}\PYZbs{};value\PYZcb{}\PYZcb{}\PYZob{}\PYZob{}s\PYZcb{}\PYZcb{} = \PYZdl{}}
+          \PY{l+s}{\PYZdl{}\PYZbs{}\PYZbs{}dfrac\PYZob{}\PYZob{} \PYZob{}fmt(xbar)\PYZcb{} \PYZhy{} \PYZob{}mu\PYZcb{}\PYZcb{}\PYZcb{}\PYZob{}\PYZob{}\PYZob{}fmt(s,2)\PYZcb{}\PYZcb{}\PYZcb{} = \PYZob{}fmt(cohend,2)\PYZcb{}\PYZdl{} }
+          \PY{l+s}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    Cohen's d = \$\dfrac{point\;estimate - null\;value}{s} = \$
+\(\dfrac{ 433 - 150}{275.34} = 1.03\)
+
+    
+    \begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  What would you conclude?
+\end{enumerate}
+
+\textbf{There's a very high probability (p \textless{} 0.001) that the
+mean number of Facebook friends counted by students in a large
+university is greater than Dunbar's number, with an effect size of about
+1 standard deviation (Cohen's d = 1.03), which is large.}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  What are the limitations, if any?
+\end{enumerate}
+
+**The sample is students at a large university in the U.S. Results may
+not generalize to other populations.
+
+    Question 2: Are individuals who have 150 or more friends on Facebook
+using Facebook in a fundamentally different way from those that have
+fewer than 150 friends? Use two sample t-tests with a significance level
+of 0.05 to compare Facebook users who have 150 Facebook friends or more
+to those with fewer than 150 Facebook friends for the 6 items that make
+up question 28 "How likely are you to use Facebook to do the following
+things, either now or in the future?". Feel free to do the calculations
+using t.test in R. Treat these Likert items as interval variables.
+
+Hints: 1) Use the ifelse function in R to create a new variable binary
+variable to categorize users with 150 or more Facebook friends from
+those with fewer than 150 Facebook friends 2) You will need to run 6 t
+tests 3) for this problem you don't need to write out the null and
+alternative hypotheses (although you should know what these are!), 4)
+for this problem you don't need to calculate effect sizes (although if
+you have time and want the practice feel free to do so for an extra
+challenge).
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Calculate 6 independent t-tests and organize results into a table with
+  independent variable, dependent variable, and results of the
+  statistical tests (i.e. t-statistic, degrees of freedom, and p-value)
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}226}]:} survey\PY{o}{\PYZdl{}}manyfriends \PY{o}{\PYZlt{}\PYZhy{}} survey\PY{o}{\PYZdl{}}totfriends \PY{o}{\PYZgt{}=} \PY{l+m}{150}
+          
+          \PY{c+c1}{\PYZsh{}https://stackoverflow.com/a/15223238/1368860}
+          
+          tests \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{lapply}\PY{p}{(}\PY{k+kp}{names}\PY{p}{(}survey\PY{p}{)}\PY{p}{[}\PY{l+m}{87}\PY{o}{:}\PY{l+m}{92}\PY{p}{]}\PY{p}{,}\PY{k+kr}{function}\PY{p}{(}x\PY{p}{)} t.test\PY{p}{(}as.formula\PY{p}{(}\PY{k+kp}{paste}\PY{p}{(}x\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{manyfriends\PYZdq{}}\PY{p}{,}sep\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZti{}\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{,}data\PY{o}{=}survey\PY{p}{)}\PY{p}{)}
+          tests
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+[[1]]
+
+	Welch Two Sample t-test
+
+data:  I.use.Facebook.to.find.people.to.date. by manyfriends
+t = -1.6922, df = 49.885, p-value = 0.09684
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.49228592  0.04209523
+sample estimates:
+mean in group FALSE  mean in group TRUE 
+           1.447368            1.672464 
+
+
+[[2]]
+
+	Welch Two Sample t-test
+
+data:  I.use.Facebook.to.meet.new.people. by manyfriends
+t = -2.9947, df = 48.699, p-value = 0.004309
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.8731783 -0.1718255
+sample estimates:
+mean in group FALSE  mean in group TRUE 
+           1.578947            2.101449 
+
+
+[[3]]
+
+	Welch Two Sample t-test
+
+data:  I.use.Facebook.to.find.people.to.add.to.my..friends..list. by manyfriends
+t = 0.12584, df = 45.891, p-value = 0.9004
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.3734089  0.4232088
+sample estimates:
+mean in group FALSE  mean in group TRUE 
+           2.076923            2.052023 
+
+
+[[4]]
+
+	Welch Two Sample t-test
+
+data:  I.use.Facebook.to.learn.more.about.other.people.in.my.classes. by manyfriends
+t = -3.0188, df = 42.866, p-value = 0.004262
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.2097863 -0.2407095
+sample estimates:
+mean in group FALSE  mean in group TRUE 
+           2.263158            2.988406 
+
+
+[[5]]
+
+	Welch Two Sample t-test
+
+data:  I.use.Facebook.to.learn.more.about.other.people.living.near.me. by manyfriends
+t = -3.3625, df = 43.384, p-value = 0.001622
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.1641441 -0.2913984
+sample estimates:
+mean in group FALSE  mean in group TRUE 
+           2.243243            2.971014 
+
+
+[[6]]
+
+	Welch Two Sample t-test
+
+data:  I.use.Facebook.to.keep.in.touch.with.my.old.friends. by manyfriends
+t = -2.9236, df = 40.273, p-value = 0.005655
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.7299161 -0.1333030
+sample estimates:
+mean in group FALSE  mean in group TRUE 
+           4.263158            4.694767 
+
+
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}246}]:} \PY{k+kn}{library}\PY{p}{(}dplyr\PY{p}{)}
+          
+          survey \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} group\PYZus{}by\PY{p}{(}manyfriends\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} summarise\PY{p}{(}
+              n\PY{o}{=}n\PY{p}{(}\PY{p}{)}\PY{p}{,}
+              date.mean\PY{o}{=}\PY{k+kp}{mean}\PY{p}{(}I.use.Facebook.to.find.people.to.date.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,}
+              date.sd\PY{o}{=}sd\PY{p}{(}I.use.Facebook.to.find.people.to.date.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,}
+              meet.mean\PY{o}{=}\PY{k+kp}{mean}\PY{p}{(}I.use.Facebook.to.meet.new.people.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,}
+              meet.sd\PY{o}{=}sd\PY{p}{(}I.use.Facebook.to.meet.new.people.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,}
+              friend\PYZus{}list.mean\PY{o}{=}\PY{k+kp}{mean}\PY{p}{(}I.use.Facebook.to.find.people.to.add.to.my..friends..list.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,}
+              friend\PYZus{}list.sd\PY{o}{=}sd\PY{p}{(}I.use.Facebook.to.find.people.to.add.to.my..friends..list.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}
+          \PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|llllllll}
+ manyfriends & n & date.mean & date.sd & meet.mean & meet.sd & friend\_list.mean & friend\_list.sd\\
+\hline
+	 FALSE     &  40       & 1.447368  & 0.7604184 & 1.578947  & 1.003550  & 2.076923  & 1.178416 \\
+	  TRUE     & 349       & 1.672464  & 0.9244552 & 2.101449  & 1.165703  & 2.052023  & 1.107371 \\
+	    NA     &  48       &      NaN  &        NA &      NaN  &       NA  &      NaN  &       NA \\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}245}]:} survey \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} group\PYZus{}by\PY{p}{(}manyfriends\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} summarise\PY{p}{(}
+              n\PY{o}{=}n\PY{p}{(}\PY{p}{)}\PY{p}{,}
+              classmates.mean\PY{o}{=}\PY{k+kp}{mean}\PY{p}{(}I.use.Facebook.to.learn.more.about.other.people.in.my.classes.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,}
+              classmates.sd\PY{o}{=}sd\PY{p}{(}I.use.Facebook.to.learn.more.about.other.people.in.my.classes.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,}
+              neighbors.mean\PY{o}{=}\PY{k+kp}{mean}\PY{p}{(}I.use.Facebook.to.learn.more.about.other.people.living.near.me.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,}
+              neighbors.sd\PY{o}{=}sd\PY{p}{(}I.use.Facebook.to.learn.more.about.other.people.living.near.me.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,}
+              old\PYZus{}friends.mean\PY{o}{=}\PY{k+kp}{mean}\PY{p}{(}I.use.Facebook.to.keep.in.touch.with.my.old.friends.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,}
+              old\PYZus{}friends.sd\PY{o}{=}sd\PY{p}{(}I.use.Facebook.to.keep.in.touch.with.my.old.friends.\PY{p}{,} na.rm\PY{o}{=}\PY{n+nb+bp}{T}\PY{p}{)}
+          \PY{p}{)}
+          
+          
+          tbl \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{data.frame}\PY{p}{(}
+              \PY{c+c1}{\PYZsh{}\PYZsq{}dependent by independent\PYZsq{}=apply(matrix(1:length(tests)), 1, function(i) unname(tests[[i]]\PYZdl{}data.name)),}
+              \PY{c+c1}{\PYZsh{}many.friends.n=sum(survey\PYZdl{}manyfriends==TRUE, na.rm=T),}
+              \PY{c+c1}{\PYZsh{}few.friends.n=sum(survey\PYZdl{}manyfriends==FALSE, na.rm=T),}
+              use.fb.to\PY{o}{=}\PY{k+kp}{names}\PY{p}{(}survey\PY{p}{)}\PY{p}{[}\PY{l+m}{87}\PY{o}{:}\PY{l+m}{92}\PY{p}{]}\PY{p}{,}
+              use.to\PY{o}{=}\PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{date\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{meet\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{friend\PYZus{}list\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{snoop\PYZus{}classmates\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{snoop\PYZus{}neighbors\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{old\PYZus{}friends\PYZdq{}}\PY{p}{)}\PY{p}{,}
+              t\PY{o}{=}\PY{k+kp}{apply}\PY{p}{(}\PY{k+kt}{matrix}\PY{p}{(}\PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}tests\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{l+m}{1}\PY{p}{,} \PY{k+kr}{function}\PY{p}{(}i\PY{p}{)} \PY{k+kp}{unname}\PY{p}{(}tests\PY{p}{[[}i\PY{p}{]]}\PY{o}{\PYZdl{}}statistic\PY{p}{[[}\PY{l+s}{\PYZsq{}}\PY{l+s}{t\PYZsq{}}\PY{p}{]]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+              df\PY{o}{=}\PY{k+kp}{apply}\PY{p}{(}\PY{k+kt}{matrix}\PY{p}{(}\PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}tests\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{l+m}{1}\PY{p}{,} \PY{k+kr}{function}\PY{p}{(}i\PY{p}{)} \PY{k+kp}{unname}\PY{p}{(}tests\PY{p}{[[}i\PY{p}{]]}\PY{o}{\PYZdl{}}parameter\PY{p}{[[}\PY{l+s}{\PYZsq{}}\PY{l+s}{df\PYZsq{}}\PY{p}{]]}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+              p.value\PY{o}{=}\PY{k+kp}{apply}\PY{p}{(}\PY{k+kt}{matrix}\PY{p}{(}\PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}tests\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{l+m}{1}\PY{p}{,} \PY{k+kr}{function}\PY{p}{(}i\PY{p}{)} \PY{k+kp}{unname}\PY{p}{(}tests\PY{p}{[[}i\PY{p}{]]}\PY{o}{\PYZdl{}}p.value\PY{p}{)}\PY{p}{)}
+              \PY{c+c1}{\PYZsh{}many.friends.est=apply(matrix(1:length(tests)), 1, function(i) unname(tests[[i]]\PYZdl{}estimate[1])), \PYZsh{} redundant with means above}
+              \PY{c+c1}{\PYZsh{}few.friends.est=apply(matrix(1:length(tests)), 1, function(i) unname(tests[[i]]\PYZdl{}estimate[2]))}
+          \PY{p}{)}
+          \PY{c+c1}{\PYZsh{}tbl\PYZdl{}use.fb.to \PYZlt{}\PYZhy{} c(\PYZdq{}date\PYZdq{}, \PYZdq{}meet\PYZdq{}, \PYZdq{}friend\PYZus{}list\PYZdq{}, \PYZdq{}snoop\PYZus{}classmates\PYZdq{}, \PYZdq{}snoop\PYZus{}neighbors\PYZdq{}, \PYZdq{}old\PYZus{}friends\PYZdq{})}
+          tbl
+          \PY{c+c1}{\PYZsh{}names(fb.use.vars) \PYZlt{}\PYZhy{} c(\PYZsq{}date\PYZsq{},\PYZsq{}meet\PYZsq{},\PYZsq{}friend\PYZus{}list\PYZsq{},\PYZsq{}snoop\PYZus{}classmates\PYZsq{},\PYZsq{}snoop\PYZus{}neighbors\PYZsq{},\PYZsq{}old\PYZus{}friends\PYZsq{})}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|llllllll}
+ manyfriends & n & date.mean & date.sd & meet.mean & meet.sd & friend\_list.mean & friend\_list.sd\\
+\hline
+	 FALSE     &  40       & 1.447368  & 0.7604184 & 1.578947  & 1.003550  & 2.076923  & 1.178416 \\
+	  TRUE     & 349       & 1.672464  & 0.9244552 & 2.101449  & 1.165703  & 2.052023  & 1.107371 \\
+	    NA     &  48       &      NaN  &        NA &      NaN  &       NA  &      NaN  &       NA \\
+\end{tabular}
+
+
+    
+    \begin{tabular}{r|llllllll}
+ manyfriends & n & classmates.mean & classmates.sd & neighbors.mean & neighbors.sd & old\_friends.mean & old\_friends.sd\\
+\hline
+	 FALSE     &  40       & 2.263158  & 1.427230  & 2.243243  & 1.256216  & 4.263158  & 0.8909215\\
+	  TRUE     & 349       & 2.988406  & 1.190995  & 2.971014  & 1.202843  & 4.694767  & 0.5583988\\
+	    NA     &  48       &      NaN  &       NA  &      NaN  &       NA  &      NaN  &        NA\\
+\end{tabular}
+
+
+    
+    \begin{tabular}{r|lllll}
+ use.fb.to & use.to & t & df & p.value\\
+\hline
+	 I.use.Facebook.to.find.people.to.date.                          & date                                                            & -1.6922122                                                      & 49.88490                                                        & 0.096843553                                                    \\
+	 I.use.Facebook.to.meet.new.people.                              & meet                                                            & -2.9947010                                                      & 48.69902                                                        & 0.004309117                                                    \\
+	 I.use.Facebook.to.find.people.to.add.to.my..friends..list.      & friend\_list                                                   &  0.1258426                                                      & 45.89110                                                        & 0.900406235                                                    \\
+	 I.use.Facebook.to.learn.more.about.other.people.in.my.classes.  & snoop\_classmates                                              & -3.0188186                                                      & 42.86636                                                        & 0.004261605                                                    \\
+	 I.use.Facebook.to.learn.more.about.other.people.living.near.me. & snoop\_neighbors                                               & -3.3625265                                                      & 43.38369                                                        & 0.001621769                                                    \\
+	 I.use.Facebook.to.keep.in.touch.with.my.old.friends.            & old\_friends                                                   & -2.9236079                                                      & 40.27269                                                        & 0.005654626                                                    \\
+\end{tabular}
+
+
+    
+    \begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Explain any significant differences in how the two groups of users,
+  those with more and fewer Facebook friends, are using Facebook by
+  reporting the means and standard deviations for the two groups for the
+  relevant type of use (e.g. ``Those with more friends are more likely
+  to use Facebook to find someone to date (Mean = X, SD = Y) than those
+  who have fewer friends (Mean = Z, SD = W)'').
+\end{enumerate}
+
+There are significant differences in some uses of Facebook for the two
+groups of users but not others.
+
+Finding people to date: low scores for both groups (1.4, 1.7), little
+difference between groups (p-value .1) Meet new people: low scores for
+both groups (1.6, 2.1), significant difference between groups (p-value:
+.004) Add to friend list: low scores for both groups (2.08, 2.05),
+little difference between groups (p-value: .9) Learn about classmates:
+medium scores for both groups (2.3, 3.0), significant difference between
+groups (p-value: .004) Learn about neighbors: low scores for both groups
+(2.2, 3.0), significant difference between groups (p-value: .002) Keep
+in touch: high scores for both groups (4.3, 4.7), significant difference
+between groups (p-value: .006)
+
+Did not calculate Cohen's d for effect sizes, but all of the differences
+are smaller than one Likert Scale point, so they do not seem
+particularly meaningful.
+
+    \begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  What would you conclude?
+\end{enumerate}
+
+Facebook users with large numbers of friends appear to be more inclined
+to use Facebook for keeping in touch with old friends and learning about
+people in their classes. To this analyst, these results don't suggest a
+fundamental difference in the ways the groups we studied use Facebook. A
+plausible explanation for the differences we did see would be that when
+people have larger Facebook friend networks, the platform is more useful
+for keeping in touch with friends and learning about people in one's
+larger community.
+
+    \begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  What are the limitations, if any?
+\end{enumerate}
+
+Rather than dividing into two groups with a cutoff at 150, it might have
+been more informative to stratify into more levels and inspect
+differences in Facebook use for those with very few or very many
+friends.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

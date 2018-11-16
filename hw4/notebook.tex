@@ -1,0 +1,661 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{HW4-notebook}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} vars \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{C150\PYZus{}4\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{UGDS\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{AVGFACSAL\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{COSTT4\PYZus{}A\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{SAT\PYZus{}AVG\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{PCTPELL\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{ADM\PYZus{}RATE\PYZsq{}}\PY{p}{)}
+        varlabels \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Rate of undergraduate completion\PYZsq{}}\PY{p}{,}
+                       \PY{l+s}{\PYZsq{}}\PY{l+s}{Undergraduate student count\PYZsq{}}\PY{p}{,}
+                       \PY{l+s}{\PYZsq{}}\PY{l+s}{Average faculty salary\PYZsq{}}\PY{p}{,}
+                       \PY{l+s}{\PYZsq{}}\PY{l+s}{Average annual cost\PYZsq{}}\PY{p}{,}
+                       \PY{l+s}{\PYZsq{}}\PY{l+s}{Average SAT score\PYZsq{}}\PY{p}{,}
+                       \PY{l+s}{\PYZsq{}}\PY{l+s}{Percent of students receiving PELL grants\PYZsq{}}\PY{p}{,}
+                       \PY{l+s}{\PYZsq{}}\PY{l+s}{Admission rate\PYZsq{}}\PY{p}{)}
+        hw4 \PY{o}{\PYZlt{}\PYZhy{}} read.csv\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{./MERGED2013\PYZus{}PPv2.csv\PYZdq{}}\PY{p}{)}\PY{p}{[}\PY{p}{,}vars\PY{p}{]}
+        str\PY{p}{(}\PY{k+kp}{head}\PY{p}{(}hw4\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+'data.frame':	6 obs. of  7 variables:
+ \$ C150\_4   : num  0.291 0.538 0.667 0.483 0.252 {\ldots}
+ \$ UGDS     : int  4051 11200 322 5525 5354 28692
+ \$ AVGFACSAL: int  7079 10170 3849 9341 6557 9605
+ \$ COSTT4\_A : int  18888 19990 12300 20306 17400 26717
+ \$ SAT\_AVG  : int  823 1146 NA 1180 830 1171
+ \$ PCTPELL  : num  0.712 0.35 0.684 0.328 0.827 {\ldots}
+ \$ ADM\_RATE : num  0.899 0.867 NA 0.806 0.512 {\ldots}
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} hw4\PY{o}{\PYZdl{}}pctgrad \PY{o}{=} hw4\PY{o}{\PYZdl{}}C150\PYZus{}4 \PY{o}{*} \PY{l+m}{100}
+        vars \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{append}\PY{p}{(}vars\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{pctgrad\PYZsq{}}\PY{p}{)}
+        varlabels \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{append}\PY{p}{(}varlabels\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{Percent graduating\PYZsq{}}\PY{p}{)}
+        ycol \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{length}\PY{p}{(}vars\PY{p}{)}
+        xcols \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{2}\PY{o}{:}\PY{l+m}{7}\PY{p}{)}
+        \PY{k+kp}{head}\PY{p}{(}hw4\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|llllllll}
+ C150\_4 & UGDS & AVGFACSAL & COSTT4\_A & SAT\_AVG & PCTPELL & ADM\_RATE & pctgrad\\
+\hline
+	 0.2914 &  4051  &  7079  & 18888  &  823   & 0.7115 & 0.8989 & 29.14 \\
+	 0.5377 & 11200  & 10170  & 19990  & 1146   & 0.3505 & 0.8673 & 53.77 \\
+	 0.6667 &   322  &  3849  & 12300  &   NA   & 0.6839 &     NA & 66.67 \\
+	 0.4835 &  5525  &  9341  & 20306  & 1180   & 0.3281 & 0.8062 & 48.35 \\
+	 0.2517 &  5354  &  6557  & 17400  &  830   & 0.8265 & 0.5125 & 25.17 \\
+	 0.6665 & 28692  &  9605  & 26717  & 1171   & 0.2107 & 0.5655 & 66.65 \\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{}str(hw4)}
+        \PY{c+c1}{\PYZsh{}hw4 \PYZlt{}\PYZhy{} na.omit(hw4)}
+        \PY{c+c1}{\PYZsh{}head(hw4)}
+        \PY{k+kp}{options}\PY{p}{(}repr.plot.width\PY{o}{=}\PY{l+m}{3}\PY{p}{,} repr.plot.height\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+        hist\PY{p}{(}hw4\PY{p}{[}\PY{p}{,}ycol\PY{p}{]}\PY{p}{,} xlab\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Percent graduating\PYZdq{}}\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Histogram (100 bins)\PYZdq{}}\PY{p}{,}breaks\PY{o}{=}\PY{l+m}{100}\PY{p}{)}\PY{c+c1}{\PYZsh{}, main=\PYZsq{}Histogram of undergratuate completion\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_2_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} qqnorm\PY{p}{(}hw4\PY{p}{[}\PY{p}{,}ycol\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_3_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} no\PYZus{}na \PY{o}{\PYZlt{}\PYZhy{}} na.omit\PY{p}{(}hw4\PY{p}{)}
+         corr \PY{o}{\PYZlt{}\PYZhy{}} cor\PY{p}{(}no\PYZus{}na\PY{p}{)}\PY{p}{[}\PY{l+m}{1}\PY{p}{,}\PY{p}{]}
+         \PY{c+c1}{\PYZsh{}names(corr) \PYZlt{}\PYZhy{} varlabels}
+         corr \PY{o}{=} \PY{k+kp}{round}\PY{p}{(}corr\PY{p}{,}\PY{l+m}{2}\PY{p}{)}
+         corrdf \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{data.frame}\PY{p}{(}Variable\PY{o}{=}varlabels\PY{p}{,} Correlation\PYZus{}to\PYZus{}Pct\PYZus{}Graduated\PY{o}{=}corr\PY{p}{)}\PY{p}{[}\PY{l+m}{2}\PY{o}{:}\PY{l+m}{7}\PY{p}{,}\PY{p}{]}
+         \PY{k+kp}{rownames}\PY{p}{(}corrdf\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kc}{NULL}
+         \PY{k+kp}{print}\PY{p}{(}corrdf\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+                                   Variable Correlation\_to\_Pct\_Graduated
+1               Undergraduate student count                         0.16
+2                    Average faculty salary                         0.61
+3                       Average annual cost                         0.59
+4                         Average SAT score                         0.82
+5 Percent of students receiving PELL grants                        -0.71
+6                            Admission rate                        -0.29
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} stats \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{data.frame}\PY{p}{(}\PY{c+c1}{\PYZsh{}model=\PYZsq{}z\PYZsq{},}
+                                 Variable\PY{o}{=}\PY{l+m}{0}\PY{p}{,}
+                                 r.sq\PY{o}{=}\PY{l+m}{0}\PY{p}{,}
+                                 cor.coef\PY{o}{=}\PY{l+m}{0}\PY{p}{,}
+                                 df\PY{o}{=}\PY{l+m}{0}\PY{p}{,}
+                                 estimate.intercept\PY{o}{=}\PY{l+m}{0}\PY{p}{,}
+                                 pval.intercept\PY{o}{=}\PY{l+m}{0}\PY{p}{,}
+                                 estimate.slope\PY{o}{=}\PY{l+m}{0}\PY{p}{,}
+                                 pval.slope\PY{o}{=}\PY{l+m}{0}\PY{p}{,}
+                            stringsAsFactors\PY{o}{=}\PY{n+nb+bp}{F}\PY{p}{)}
+         \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} xcols\PY{p}{)} \PY{p}{\PYZob{}}
+             f \PY{o}{\PYZlt{}\PYZhy{}} glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZob{}vars[ycol]\PYZcb{} \PYZti{} \PYZob{}vars[i]\PYZcb{}\PYZsq{}}\PY{p}{)}
+             model \PY{o}{\PYZlt{}\PYZhy{}} lm\PY{p}{(}f\PY{p}{,} data \PY{o}{=} hw4\PY{p}{)}
+             smry \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{summary}\PY{p}{(}model\PY{p}{)}
+             \PY{k+kp}{print}\PY{p}{(}f\PY{p}{)}
+             \PY{k+kp}{print}\PY{p}{(}smry\PY{p}{)}
+             stats\PY{p}{[}\PY{k+kp}{nrow}\PY{p}{(}stats\PY{p}{)}\PY{l+m}{+1}\PY{p}{,}\PY{p}{]} \PY{o}{=} \PY{k+kt}{list}\PY{p}{(}
+                                 \PY{c+c1}{\PYZsh{}model=f,}
+                                 Variable\PY{o}{=}varlabels\PY{p}{[[}i\PY{p}{]]}\PY{p}{,}
+                                 r.sq\PY{o}{=}smry\PY{o}{\PYZdl{}}adj.r.squared\PY{p}{,}
+                                 cor.coef\PY{o}{=}\PY{k+kp}{sqrt}\PY{p}{(}smry\PY{o}{\PYZdl{}}adj.r.squared\PY{p}{)}\PY{p}{,}
+                                 df\PY{o}{=}smry\PY{o}{\PYZdl{}}df\PY{p}{[[}\PY{l+m}{2}\PY{p}{]]}\PY{p}{,}
+                                 estimate.intercept\PY{o}{=}smry\PY{o}{\PYZdl{}}coefficients\PY{p}{[}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{1}\PY{p}{]}\PY{p}{,}
+                                 pval.intercept\PY{o}{=}smry\PY{o}{\PYZdl{}}coefficients\PY{p}{[}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{4}\PY{p}{]}\PY{p}{,}
+                                 estimate.slope\PY{o}{=}smry\PY{o}{\PYZdl{}}coefficients\PY{p}{[}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{1}\PY{p}{]}\PY{p}{,}
+                                 pval.slope\PY{o}{=}smry\PY{o}{\PYZdl{}}coefficients\PY{p}{[}\PY{l+m}{2}\PY{p}{,}\PY{l+m}{4}\PY{p}{]}\PY{p}{)}
+         \PY{p}{\PYZcb{}}
+         stats \PY{o}{\PYZlt{}\PYZhy{}} stats\PY{p}{[}\PY{l+m}{2}\PY{o}{:}\PY{k+kp}{nrow}\PY{p}{(}stats\PY{p}{)}\PY{p}{,}\PY{p}{]}
+         \PY{k+kp}{rownames}\PY{p}{(}stats\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kc}{NULL}
+         stats
+         \PY{c+c1}{\PYZsh{} model:}
+         \PY{c+c1}{\PYZsh{} [1] \PYZdq{}coefficients\PYZdq{}  \PYZdq{}residuals\PYZdq{}     \PYZdq{}effects\PYZdq{}       \PYZdq{}rank\PYZdq{}         }
+         \PY{c+c1}{\PYZsh{} [5] \PYZdq{}fitted.values\PYZdq{} \PYZdq{}assign\PYZdq{}        \PYZdq{}qr\PYZdq{}            \PYZdq{}df.residual\PYZdq{}  }
+         \PY{c+c1}{\PYZsh{} [9] \PYZdq{}na.action\PYZdq{}     \PYZdq{}xlevels\PYZdq{}       \PYZdq{}call\PYZdq{}          \PYZdq{}terms\PYZdq{}        }
+         \PY{c+c1}{\PYZsh{} [13] \PYZdq{}model\PYZdq{}   }
+         \PY{c+c1}{\PYZsh{} smry:}
+         \PY{c+c1}{\PYZsh{} [1] \PYZdq{}call\PYZdq{}          \PYZdq{}terms\PYZdq{}         \PYZdq{}residuals\PYZdq{}     \PYZdq{}coefficients\PYZdq{} }
+         \PY{c+c1}{\PYZsh{} [5] \PYZdq{}aliased\PYZdq{}       \PYZdq{}sigma\PYZdq{}         \PYZdq{}df\PYZdq{}            \PYZdq{}r.squared\PYZdq{}    }
+         \PY{c+c1}{\PYZsh{} [9] \PYZdq{}adj.r.squared\PYZdq{} \PYZdq{}fstatistic\PYZdq{}    \PYZdq{}cov.unscaled\PYZdq{}  \PYZdq{}na.action\PYZdq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+pctgrad \textasciitilde{} UGDS
+
+Call:
+lm(formula = f, data = hw4)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-87.083 -14.952  -0.812  14.354  53.898 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 4.610e+01  4.912e-01  93.841  < 2e-16 ***
+UGDS        3.656e-04  5.919e-05   6.177 7.63e-10 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 21.22 on 2446 degrees of freedom
+  (5356 observations deleted due to missingness)
+Multiple R-squared:  0.01536,	Adjusted R-squared:  0.01496 
+F-statistic: 38.16 on 1 and 2446 DF,  p-value: 7.628e-10
+
+pctgrad \textasciitilde{} AVGFACSAL
+
+Call:
+lm(formula = f, data = hw4)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-54.989 -12.232  -0.262  11.688  79.755 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 1.709e+01  1.068e+00   16.00   <2e-16 ***
+AVGFACSAL   4.728e-03  1.563e-04   30.25   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 18.05 on 2428 degrees of freedom
+  (5374 observations deleted due to missingness)
+Multiple R-squared:  0.2737,	Adjusted R-squared:  0.2734 
+F-statistic: 915.1 on 1 and 2428 DF,  p-value: < 2.2e-16
+
+pctgrad \textasciitilde{} COSTT4\_A
+
+Call:
+lm(formula = f, data = hw4)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-55.750 -11.766  -0.258  11.114  70.333 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 2.066e+01  9.365e-01   22.06   <2e-16 ***
+COSTT4\_A    9.190e-04  2.946e-05   31.19   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 17.83 on 2385 degrees of freedom
+  (5417 observations deleted due to missingness)
+Multiple R-squared:  0.2897,	Adjusted R-squared:  0.2894 
+F-statistic: 972.8 on 1 and 2385 DF,  p-value: < 2.2e-16
+
+pctgrad \textasciitilde{} SAT\_AVG
+
+Call:
+lm(formula = f, data = hw4)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-45.471  -6.395   0.423   6.498  57.566 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -60.516313   2.238193  -27.04   <2e-16 ***
+SAT\_AVG       0.108760   0.002094   51.93   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 10.17 on 1375 degrees of freedom
+  (6427 observations deleted due to missingness)
+Multiple R-squared:  0.6623,	Adjusted R-squared:  0.6621 
+F-statistic:  2697 on 1 and 1375 DF,  p-value: < 2.2e-16
+
+pctgrad \textasciitilde{} PCTPELL
+
+Call:
+lm(formula = f, data = hw4)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-66.991 -10.733  -0.389  10.657  82.479 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  73.2414     0.9021   81.19   <2e-16 ***
+PCTPELL     -55.7200     1.7888  -31.15   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 18.08 on 2444 degrees of freedom
+  (5358 observations deleted due to missingness)
+Multiple R-squared:  0.2842,	Adjusted R-squared:  0.2839 
+F-statistic: 970.3 on 1 and 2444 DF,  p-value: < 2.2e-16
+
+pctgrad \textasciitilde{} ADM\_RATE
+
+Call:
+lm(formula = f, data = hw4)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-63.356 -12.813   0.497  13.725  58.586 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   72.895      1.515   48.12   <2e-16 ***
+ADM\_RATE     -31.481      2.181  -14.43   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 18.41 on 1794 degrees of freedom
+  (6008 observations deleted due to missingness)
+Multiple R-squared:  0.104,	Adjusted R-squared:  0.1035 
+F-statistic: 208.3 on 1 and 1794 DF,  p-value: < 2.2e-16
+
+
+    \end{Verbatim}
+
+    \begin{tabular}{r|llllllll}
+ Variable & r.sq & cor.coef & df & estimate.intercept & pval.intercept & estimate.slope & pval.slope\\
+\hline
+	 Undergraduate student count               & 0.01495694                                & 0.1222986                                 & 2446                                      &  46.09669                                 &  0.000000e+00                             &  3.655899e-04                             &  7.627722e-10                            \\
+	 Average faculty salary                    & 0.27342130                                & 0.5228970                                 & 2428                                      &  17.09193                                 &  7.069254e-55                             &  4.727621e-03                             & 7.416366e-171                            \\
+	 Average annual cost                       & 0.28942579                                & 0.5379831                                 & 2385                                      &  20.65941                                 &  2.741287e-98                             &  9.190133e-04                             & 2.036421e-179                            \\
+	 Average SAT score                         & 0.66209316                                & 0.8136911                                 & 1375                                      & -60.51631                                 & 1.817932e-129                             &  1.087605e-01                             &  0.000000e+00                            \\
+	 Percent of students receiving PELL grants & 0.28389091                                & 0.5328141                                 & 2444                                      &  73.24137                                 &  0.000000e+00                             & -5.571999e+01                             & 1.117018e-179                            \\
+	 Admission rate                            & 0.10352043                                & 0.3217459                                 & 1794                                      &  72.89517                                 &  0.000000e+00                             & -3.148097e+01                             &  9.462405e-45                            \\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k+kp}{options}\PY{p}{(}repr.plot.width\PY{o}{=}\PY{l+m}{4}\PY{p}{,} repr.plot.height\PY{o}{=}\PY{l+m}{4}\PY{p}{)}
+         \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} xcols\PY{p}{)} \PY{p}{\PYZob{}}
+             f \PY{o}{\PYZlt{}\PYZhy{}} glue\PY{o}{::}glue\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZob{}vars[ycol]\PYZcb{} \PYZti{} \PYZob{}vars[i]\PYZcb{}\PYZsq{}}\PY{p}{)}
+             model \PY{o}{\PYZlt{}\PYZhy{}} lm\PY{p}{(}f\PY{p}{,} data \PY{o}{=} no\PYZus{}na\PY{p}{)}
+             smry \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{summary}\PY{p}{(}model\PY{p}{)}
+             res \PY{o}{=} resid\PY{p}{(}model\PY{p}{)}
+             plot\PY{p}{(}no\PYZus{}na\PY{p}{[}\PY{p}{,}ycol\PY{p}{]} \PY{o}{\PYZti{}} no\PYZus{}na\PY{p}{[}\PY{p}{,}i\PY{p}{]}\PY{p}{,} ylab\PY{o}{=}varlabels\PY{p}{[[}ycol\PY{p}{]]}\PY{p}{,} xlab\PY{o}{=}varlabels\PY{p}{[[}i\PY{p}{]]}\PY{p}{)}
+             abline\PY{p}{(}model\PY{p}{)}
+             plot\PY{p}{(}no\PYZus{}na\PY{p}{[}\PY{p}{,}i\PY{p}{]}\PY{p}{,} res\PY{p}{,} ylab\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Residuals\PYZdq{}}\PY{p}{,} xlab\PY{o}{=}varlabels\PY{p}{[}i\PY{p}{]}\PY{p}{,} main\PY{o}{=}\PY{k+kc}{NULL}\PY{p}{)} 
+             abline\PY{p}{(}\PY{l+m}{0}\PY{p}{,} \PY{l+m}{0}\PY{p}{)}
+         \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_7.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_8.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_9.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_10.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_11.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k+kp}{options}\PY{p}{(}repr.plot.width\PY{o}{=}\PY{l+m}{3}\PY{p}{,} repr.plot.height\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         hist\PY{p}{(}hw4\PY{p}{[}\PY{p}{,}\PY{l+m}{5}\PY{p}{]}\PY{p}{,} xlab\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{University averages\PYZdq{}}\PY{p}{,} main\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Average SAT distribution\PYZdq{}}\PY{p}{)}
+         qqnorm\PY{p}{(}hw4\PY{p}{[}\PY{p}{,}\PY{l+m}{5}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
